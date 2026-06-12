@@ -1,0 +1,28 @@
+package Activity;
+
+public class Car {
+	String color;
+	String transmission;
+	int make;
+	int tyres=4;
+	int doors=4;
+	Car(String color,String transmission,int make)
+     {
+		this.color=color;
+		this.transmission = transmission;
+		this.make=make;	
+     }
+	public void displayCharacteristics()
+	{
+		System.out.println(color + " " + transmission + " " + make + " "+tyres + " "+ doors );
+		
+	}
+	public void accelarate() 
+	{
+		System.out.println("Car is moving forward.");
+	}
+	public void brake() 
+	{
+		System.out.println("Car is stopped.");	
+	}
+}
