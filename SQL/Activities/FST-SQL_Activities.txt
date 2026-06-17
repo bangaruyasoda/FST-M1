@@ -80,3 +80,73 @@ where purchase_amount<500;
 
 Select * from orders
 where (purchase_amount<2000 and purchase_amount>1000);
+
+--Activity 7
+
+select sum(purchase_amount) from orders;
+
+select avg(purchase_amount) from orders;
+
+select max(purchase_amount) from orders;
+
+select min(purchase_amount) from orders;
+
+select count(distinct SALESMAN_ID) from orders;
+
+-- Activity 8
+
+select CUSTOMER_ID, max(purchase_amount) from orders
+group by customer_id
+order by max(purchase_amount);
+
+select SALESMAN_ID, max(purchase_amount) from orders
+where (ORDER_DATE=to_date('2012-08-17','YYYY/mm/dd'))
+group by SALESMAN_ID;
+
+
+select customer_id, max(purchase_amount),ORDER_DATE from orders
+group by CUSTOMER_ID,ORDER_DATE
+having max(purchase_amount) in (2030, 3450, 5760, 6000);
+
+--Activity 9
+create table Newcustomers (
+    customer_id int primary key, customer_name varchar(32),
+    city varchar(20), grade int, salesman_id int);
+
+INSERT ALL
+    INTO Newcustomers VALUES (3002, 'Nick Rimando', 'New York', 100, 5001)
+    INTO Newcustomers VALUES (3007, 'Brad Davis', 'New York', 200, 5001)
+    INTO Newcustomers VALUES (3005, 'Graham Zusi', 'California', 200, 5002)
+    INTO Newcustomers VALUES (3008, 'Julian Green', 'London', 300, 5002)
+    INTO Newcustomers VALUES (3004, 'Fabian Johnson', 'Paris', 300, 5006)
+    INTO Newcustomers VALUES (3009, 'Geoff Cameron', 'Berlin', 100, 5003)
+    INTO Newcustomers VALUES (3003, 'Jozy Altidor', 'Moscow', 200, 5007)
+    INTO Newcustomers VALUES (3001, 'Brad Guzan', 'London', 300, 5005)
+SELECT 1 FROM DUAL;
+
+select a.salesman_id ,a.customer_name from NEWCUSTOMERS a
+inner join
+salesman b 
+on(a.SALESMAN_ID=b.SALESMAN_ID); 
+
+select a.CUSTOMER_ID,a.CUSTOMER_NAME,a.GRADE from NEWCUSTOMERS a 
+left OUTER join 
+salesman b
+on (a.SALESMAN_ID=b.SALESMAN_ID)
+where(a.GRADE<300)
+order BY a.customer_id ASC;
+
+select a.CUSTOMER_ID ,a.customer_name ,b.salesman_id ,b.commission from NEWCUSTOMERS a
+right OUTER join
+salesman b 
+on(a.SALESMAN_ID=b.SALESMAN_ID)
+where (b.commission>12);
+
+select a.order_no,a.purchase_amount,a.ORDER_DATE,c.COMMISSION,b.customer_name 
+from orders a
+inner join NEWCUSTOMERS b 
+on(a.CUSTOMER_ID=b.CUSTOMER_ID)
+inner join SALESMAN c
+on(b.SALESMAN_ID=c.SALESMAN_ID);
+
+
