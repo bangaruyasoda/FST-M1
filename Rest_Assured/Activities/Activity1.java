@@ -1,0 +1,58 @@
+package Example;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
+import static io.restassured.RestAssured.given;
+
+public class Activity1 
+{
+	RequestSpecification requestSpec;
+	ResponseSpecification responseSpec;
+	String SSH_key="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIM7DSLj/VIiwvhPyoGq+CuDjcVX6pCvR8AShnFe7EWk azuread\\bangaruyasoda@IBM-FXVQR24";
+	int SSHID =0;
+
+
+	@BeforeClass
+	public void setUp() {
+		requestSpec = new RequestSpecBuilder()
+			     		.addHeader("Content-Type", "application/json")
+						.setBaseUri("https://api.github.com")
+						.build();
+
+		responseSpec = new ResponseSpecBuilder()
+				.expectStatusCode(200)
+				.expectContentType("application/json")
+				.expectBody("status", equalTo("alive"))
+				.build();
+	}
+ @Test
+    public void testCreateSSHKey() 
+ {
+        String requestBody = "{\n" +
+            "    \"title\": \"TestAPIKey\",\n" +
+            "    \"key\": \"SSH_key" +"}";
+        
+    Response response =
+                     given()
+                    .contentType(ContentType.JSON)
+                    .body(requestBody)
+                    .when()
+                    .post("/user/SSH_key");
+    SSHID = response.jsonPath().getInt("SSHID");
+    assertEquals(201, response.getStatusCode());
+    assertTrue(SSHID > 0);
+}
+
+}
