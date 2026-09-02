@@ -1,0 +1,5 @@
+# Define a fixture for the wallet amount
+@pytest.fixture
+def wallet_amount():
+   amount = 0
+   return amount
