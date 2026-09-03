@@ -25,10 +25,10 @@ public class Activity22 {
 		WebElement pass= driver.findElement(By.id("password"));
 		user.sendKeys("admin");
 		pass.sendKeys("password");
-		WebElement submit = driver.findElement(By.className("svelte-1pdjkmx"));
+		WebElement submit = driver.findElement(By.xpath("//button[text()=\"Submit\"]"));
 		submit.click();
-		Thread.sleep(1000);
-		WebElement message = driver.findElement(By.xpath("//div[@id=\'svelte-announcer\']"));
+		Thread.sleep(5000);
+		WebElement message = driver.findElement(By.xpath("//h1"));
         System.out.println("Login message: " + message.getText());
 		driver.quit();	
 	}
